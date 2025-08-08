@@ -1,3 +1,21 @@
+function updateWeatherImage(condition) {
+    const weatherIcon = document.getElementById("weatherIcon");
+
+    const imageMap = {
+        Clear: "images/sunny.png",
+        Clouds: "images/cloudy.png",
+        Rain: "images/rainy.png",
+        Snow: "images/snow.png",
+        Mist: "images/mist.png",
+        Thunderstorm: "images/thunderstorm.png",
+        Haze: "images/mist.png",
+        Drizzle: "images/rainy.png"
+    };
+
+    const imageName = imageMap[condition]; // fallback if condition not found
+    weatherIcon.src = `${imageName}`;
+}
+
 async function getWeather(){
     let city = document.getElementById('cityInput').value;
     console.log(city);
@@ -19,7 +37,8 @@ async function getWeather(){
             resultDiv.innerHTML = `<p class="text-red-400 animate-fade-in">City not found. Try again.</p>`;
             return;
         }
-
+        updateWeatherImage(data.weather[0].main);
+        console.log(data);
         const weatherHTML = `
             <div class="animate-fade-in-up transition duration-700">
                 <h2 class="text-3xl font-bold">${data.name}, ${data.sys.country}</h2>
